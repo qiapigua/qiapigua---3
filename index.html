@@ -7,6 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Dancing+Script:wght@700&family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* 保持原有所有样式不变 */
         /* 基础样式重置 */
         * {
             margin: 0;
@@ -476,6 +477,13 @@
             .btn-wrapper { margin-bottom: 15px; }
             .install-btn { padding-left: 45px; font-size: clamp(1.1rem, 7vw, 24px); }
         }
+
+        /* 确保所有设备上星星都是白色 */
+        @media (max-width: 768px) {
+            .star {
+                background-color: white !important;
+            }
+        }
     </style>
 </head>
 <body>
@@ -532,7 +540,7 @@
     <h1 class="site-title">皮瓜软件站</h1>
     
     <div class="button-container">
-        <!-- 直接使用href属性实现跳转 -->
+        <!-- 原有按钮保持不变 -->
         <div class="btn-wrapper">
             <span class="btn-number">1</span>
             <a href="https://easylink.cc/ojvp99" class="install-btn"><i class="fas fa-download"></i>皮瓜软件站1.0</a>
@@ -541,21 +549,17 @@
             <span class="btn-number">2</span>
             <a href="https://easylink.cc/sst4iw" class="install-btn"><i class="fas fa-download"></i>皮瓜星空开罗2.0</a>
         </div>
-        
-        <!-- 保持您提供的按钮格式 -->
         <div class="btn-wrapper">
             <span class="btn-number">3</span>
             <a href="https://easylink.cc/yfrzc9" class="install-btn"><i class="fas fa-download"></i>花扇魔改双旦</a>
         </div>
-        
-        <!-- 安装包按钮（无链接） -->
         <div class="btn-wrapper">
             <span class="btn-number">4</span>
             <a href="https://easylink.cc/9xg47h" class="install-btn"><i class="fas fa-download"></i>皮瓜魔改国服洛阳</a>
         </div>
-        <div class="btn-wrapper">
+       <div class="btn-wrapper">
             <span class="btn-number">5</span>
-            <a href="https://easylink.cc/6unbkr" class="install-btn"><i class="fas fa-download"></i>国服破解中国城(自配防闪)</a>
+            <a href="https://image.cursorhub.org/user-upload/1761132411567-a097769f-699d-47da-a471-3531417f87f9.html" class="install-btn direct-link"><i class="fas fa-download"></i>国服破解中国城(谨慎下载)</a>
         </div>
         <div class="btn-wrapper">
             <span class="btn-number">6</span>
@@ -564,213 +568,194 @@
     </div>
 
     <script>
-        // 星空效果
-        function createStars() {
-            const starrySky = document.getElementById('starry-sky');
-            const starCount = window.innerWidth < 600 ? 100 : 200; // 移动设备减少星星数量提升性能
-            
-            // 清除现有星星
-            while (starrySky.querySelector('.star')) {
-                starrySky.removeChild(starrySky.querySelector('.star'));
-            }
-            
-            // 创建新星星
-            for (let i = 0; i < starCount; i++) {
-                const star = document.createElement('div');
-                const size = Math.random() > 0.7 ? 'large' : (Math.random() > 0.5 ? 'medium' : 'small');
-                
-                star.className = `star ${size}`;
-                star.style.left = `${Math.random() * 100}%`;
-                star.style.top = `${Math.random() * 100}%`;
-                star.style.animationDelay = `${Math.random() * 5}s`;
-                star.style.animationDuration = `${3 + Math.random() * 7}s`;
-                
-                starrySky.appendChild(star);
-            }
-        }
-        
-        // 流星效果
-        function createMeteor() {
-            const starrySky = document.getElementById('starry-sky');
-            const meteor = document.createElement('div');
-            
-            meteor.className = 'meteor';
-            meteor.style.top = `${Math.random() * 30 + 10}%`;
-            meteor.style.right = `-${Math.random() * 100 + 50}px`;
-            
-            starrySky.appendChild(meteor);
-            
-            // 随机动画参数
-            const duration = 1 + Math.random() * 2;
-            meteor.style.animation = `meteor ${duration}s linear forwards`;
-            
-            // 动画结束后移除
-            setTimeout(() => {
-                if (meteor.parentNode) {
-                    starrySky.removeChild(meteor);
-                }
-            }, duration * 1000);
-        }
-        
-        // 定时创建流星
-        function startMeteorShower() {
-            setTimeout(() => {
-                createMeteor();
-                
-                setInterval(() => {
-                    if (Math.random() > 0.7) {
-                        createMeteor();
-                    }
-                }, 3000 + Math.random() * 5000);
-            }, 2000);
-        }
-        
-        // 播放点击音效
-        function playClickSound() {
-            const sound = document.getElementById('click-sound');
-            if (sound) {
-                // 重置音效以允许连续播放
-                sound.currentTime = 0;
-                try {
-                    sound.play().catch(e => {
-                        // 处理浏览器自动播放限制
-                        console.log('音效播放失败:', e);
-                    });
-                } catch (e) {
-                    console.log('音效播放错误:', e);
-                }
-            }
-        }
-        
-        // 按钮点击处理
-        function handleButtonAction(button) {
-            // 播放点击音效
-            playClickSound();
-            
-            // 直接从href属性获取链接
-            const url = button.getAttribute('href');
+        // 等待DOM加载完成
+        document.addEventListener('DOMContentLoaded', function() {
+            // 获取元素
+            const installBtns = document.querySelectorAll('.install-btn:not(.direct-link)'); // 排除带direct-link类的按钮
+            const directLinks = document.querySelectorAll('.install-btn.direct-link'); // 只选择带direct-link类的按钮
+            const browserBackdrop = document.querySelector('.browser-backdrop');
+            const browserWindow = document.querySelector('.browser-window');
+            const browserIframe = document.querySelector('.browser-iframe');
+            const browserLoading = document.querySelector('.browser-loading');
+            const urlDisplay = document.querySelector('.url-display');
+            const closeButtons = document.querySelectorAll('.browser-btn.close, .close-button');
             const toast = document.querySelector('.toast');
-            // 获取按钮文本内容（去除图标和空格）
-            const buttonText = button.textContent.trim();
+            const clickSound = document.getElementById('click-sound');
+            const colorPickerToggle = document.querySelector('.color-picker-toggle');
+            const colorPickerPanel = document.querySelector('.color-picker-panel');
+            const colorOptions = document.querySelectorAll('.color-option');
+            const root = document.documentElement;
+
+            // 生成星空
+            function createStars() {
+                const starrySky = document.getElementById('starry-sky');
+                const starCount = window.innerWidth < 768 ? 100 : 200; // 移动端星星数量少一些
+                
+                // 清空现有星星
+                while (starrySky.firstChild) {
+                    if (!starrySky.firstChild.classList.contains('meteor')) {
+                        starrySky.removeChild(starrySky.firstChild);
+                    } else {
+                        break;
+                    }
+                }
+                
+                // 创建新星星
+                for (let i = 0; i < starCount; i++) {
+                    const star = document.createElement('div');
+                    const size = Math.random() > 0.7 ? 'large' : (Math.random() > 0.5 ? 'medium' : 'small');
+                    
+                    star.classList.add('star', size);
+                    star.style.left = `${Math.random() * 100}%`;
+                    star.style.top = `${Math.random() * 100}%`;
+                    star.style.animationDelay = `${Math.random() * 5}s`;
+                    star.style.animationDuration = `${3 + Math.random() * 7}s`;
+                    
+                    starrySky.appendChild(star);
+                }
+            }
+
+            // 创建流星
+            function createMeteor() {
+                const starrySky = document.getElementById('starry-sky');
+                const meteor = document.createElement('div');
+                
+                meteor.classList.add('meteor');
+                meteor.style.top = `${Math.random() * 30 + 10}%`;
+                meteor.style.right = `-${Math.random() * 20}%`;
+                
+                starrySky.appendChild(meteor);
+                
+                // 随机延迟后播放动画
+                setTimeout(() => {
+                    meteor.style.animation = `meteor ${1 + Math.random() * 2}s linear forwards`;
+                    
+                    // 动画结束后移除流星
+                    setTimeout(() => {
+                        if (meteor.parentNode) {
+                            starrySky.removeChild(meteor);
+                        }
+                    }, 3000);
+                }, Math.random() * 1000);
+            }
+
+            // 定期创建流星
+            setInterval(createMeteor, 5000);
+            createMeteor(); // 立即创建一个流星
             
-            // 只有当按钮文本是"安装包"时才显示无效果弹窗
-            if (buttonText === '安装包') {
-                toast.textContent = "此按钮无效果";
+            // 初始化星空
+            createStars();
+            window.addEventListener('resize', createStars);
+
+            // 按钮点击音效
+            function playClickSound() {
+                try {
+                    clickSound.currentTime = 0;
+                    clickSound.play().catch(e => console.log('音效播放失败:', e));
+                } catch (e) {
+                    console.log('音效播放失败:', e);
+                }
+            }
+
+            // 显示提示框
+            function showToast(message) {
+                toast.textContent = message || toast.textContent;
                 toast.classList.add('show');
                 
                 setTimeout(() => {
                     toast.classList.remove('show');
                 }, 2000);
-            } 
-            // 有有效链接的按钮正常打开链接
-            else if (url && url !== '#') {
-                openBrowserWindow(url);
             }
-        }
-        
-        // 绑定按钮点击事件
-        function setupButtonClicks() {
-            const buttons = document.querySelectorAll('.install-btn');
-            
-            buttons.forEach(button => {
-                button.addEventListener('click', function(e) {
-                    e.preventDefault(); // 阻止默认链接跳转行为
-                    handleButtonAction(this);
-                });
-            });
-        }
-        
-        // 浏览器窗口模拟
-        function openBrowserWindow(url) {
-            const backdrop = document.querySelector('.browser-backdrop');
-            const window = document.querySelector('.browser-window');
-            const iframe = document.querySelector('.browser-iframe');
-            const urlDisplay = document.querySelector('.url-display');
-            const loading = document.querySelector('.browser-loading');
-            
-            urlDisplay.textContent = url;
-            backdrop.classList.add('active');
-            window.classList.add('active');
-            
-            // 模拟加载
-            iframe.style.display = 'none';
-            loading.style.display = 'flex';
-            
-            setTimeout(() => {
-                iframe.src = url;
-                iframe.style.display = 'block';
-                loading.style.display = 'none';
-            }, 1500);
-        }
-        
-        // 关闭浏览器窗口
-        function setupCloseButtons() {
-            const closeButtons = document.querySelectorAll('.close-button, .browser-btn.close');
-            const backdrop = document.querySelector('.browser-backdrop');
-            const window = document.querySelector('.browser-window');
-            const iframe = document.querySelector('.browser-iframe');
-            const loading = document.querySelector('.browser-loading');
-            
-            closeButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    backdrop.classList.remove('active');
-                    window.classList.remove('active');
-                    
-                    setTimeout(() => {
-                        iframe.src = '';
-                        iframe.style.display = 'none';
-                        loading.style.display = 'flex';
-                    }, 500);
-                });
-            });
-            
-            // 最小化按钮功能
-            document.querySelector('.browser-btn.minimize').addEventListener('click', () => {
-                const window = document.querySelector('.browser-window');
-                window.style.transform = 'translate(-50%, 150%)';
-                setTimeout(() => {
-                    window.style.transform = 'translate(-50%, -50%)';
-                }, 1000);
-            });
-            
-            // 最大化按钮功能
-            const maximizeBtn = document.querySelector('.browser-btn.maximize');
-            let isMaximized = false;
-            
-            maximizeBtn.addEventListener('click', () => {
-                const window = document.querySelector('.browser-window');
-                if (isMaximized) {
-                    // 恢复原始大小
-                    window.style.width = '95%';
-                    window.style.height = '90vh';
-                    window.style.transform = 'translate(-50%, -50%)';
-                    window.style.borderRadius = '10px';
-                    maximizeBtn.style.backgroundColor = '#28c840';
-                } else {
-                    // 最大化
-                    window.style.width = '100%';
-                    window.style.height = '100vh';
-                    window.style.transform = 'translate(0, 0)';
-                    window.style.borderRadius = '0';
-                    maximizeBtn.style.backgroundColor = '#888';
+
+            // 打开浏览器窗口
+            function openBrowser(url) {
+                if (!url || url === '#') {
+                    playClickSound();
+                    showToast('此按钮无效果');
+                    return;
                 }
-                isMaximized = !isMaximized;
+                
+                playClickSound();
+                browserBackdrop.classList.add('active');
+                browserWindow.classList.add('active');
+                urlDisplay.textContent = url;
+                browserIframe.style.display = 'none';
+                browserLoading.style.display = 'flex';
+                
+                // 加载iframe
+                browserIframe.src = url;
+                browserIframe.onload = function() {
+                    browserLoading.style.display = 'none';
+                    browserIframe.style.display = 'block';
+                };
+                
+                // 防止链接在新窗口打开
+                browserIframe.onload = function() {
+                    browserLoading.style.display = 'none';
+                    browserIframe.style.display = 'block';
+                    
+                    // 尝试捕获iframe中的链接点击
+                    try {
+                        const iframeDoc = browserIframe.contentDocument || browserIframe.contentWindow.document;
+                        iframeDoc.addEventListener('click', function(e) {
+                            if (e.target.tagName === 'A') {
+                                e.preventDefault();
+                                const newUrl = e.target.href;
+                                if (newUrl) {
+                                    urlDisplay.textContent = newUrl;
+                                    browserLoading.style.display = 'flex';
+                                    browserIframe.style.display = 'none';
+                                    browserIframe.src = newUrl;
+                                }
+                            }
+                        });
+                    } catch (e) {
+                        console.log('无法访问iframe内容:', e);
+                    }
+                };
+            }
+
+            // 关闭浏览器窗口
+            function closeBrowser() {
+                browserBackdrop.classList.remove('active');
+                browserWindow.classList.remove('active');
+                browserIframe.src = '';
+                browserIframe.style.display = 'none';
+                browserLoading.style.display = 'flex';
+                urlDisplay.textContent = '加载中...';
+            }
+
+            // 绑定按钮事件 - 原有按钮使用弹窗
+            installBtns.forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault(); // 阻止默认跳转
+                    const url = this.getAttribute('href');
+                    openBrowser(url);
+                });
             });
-        }
-        
-        // 颜色选择器功能
-        function setupColorPicker() {
-            const panel = document.querySelector('.color-picker-panel');
-            const toggle = document.querySelector('.color-picker-toggle');
-            const colorOptions = document.querySelectorAll('.color-option');
-            const root = document.documentElement;
-            
-            // 切换面板显示/隐藏
-            toggle.addEventListener('click', () => {
-                panel.classList.toggle('open');
-                // 切换箭头方向
-                const icon = toggle.querySelector('i');
-                if (panel.classList.contains('open')) {
+
+            // 直接跳转按钮不使用弹窗，保持默认行为
+            directLinks.forEach(link => {
+                // 不需要添加click事件阻止默认行为，保持a标签的天然跳转功能
+                // 仅添加点击音效
+                link.addEventListener('click', function() {
+                    playClickSound();
+                });
+            });
+
+            // 绑定关闭按钮事件
+            closeButtons.forEach(btn => {
+                btn.addEventListener('click', closeBrowser);
+            });
+
+            // 点击背景关闭浏览器窗口
+            browserBackdrop.addEventListener('click', closeBrowser);
+
+            // 颜色选择器切换
+            colorPickerToggle.addEventListener('click', function() {
+                colorPickerPanel.classList.toggle('open');
+                const icon = this.querySelector('i');
+                if (colorPickerPanel.classList.contains('open')) {
                     icon.classList.remove('fa-chevron-right');
                     icon.classList.add('fa-chevron-left');
                 } else {
@@ -779,70 +764,45 @@
                 }
                 playClickSound();
             });
-            
+
             // 颜色选择
             colorOptions.forEach(option => {
-                option.addEventListener('click', () => {
-                    // 移除其他选项的选中状态
-                    colorOptions.forEach(opt => opt.classList.remove('selected'));
-                    // 添加当前选项的选中状态
-                    option.classList.add('selected');
+                option.addEventListener('click', function() {
+                    playClickSound();
                     
-                    // 获取颜色值
-                    const color = option.getAttribute('data-color');
-                    const colorLight = option.getAttribute('data-light');
-                    const colorDark = option.getAttribute('data-dark');
+                    // 更新选中状态
+                    colorOptions.forEach(opt => opt.classList.remove('selected'));
+                    this.classList.add('selected');
                     
                     // 更新CSS变量
+                    const color = this.getAttribute('data-color');
+                    const colorLight = this.getAttribute('data-light');
+                    const colorDark = this.getAttribute('data-dark');
+                    
                     root.style.setProperty('--glow-color', color);
                     root.style.setProperty('--glow-color-light', colorLight);
                     root.style.setProperty('--glow-color-dark', colorDark);
                     
-                    // 更新浏览器窗口阴影颜色
-                    document.querySelector('.browser-window').style.boxShadow = `0 0 30px ${color}`;
+                    // 更新流星和加载动画的颜色
+                    document.querySelectorAll('.meteor').forEach(meteor => {
+                        meteor.style.background = `linear-gradient(90deg, transparent, ${color}80, transparent)`;
+                    });
                     
-                    // 更新加载动画颜色
                     document.querySelector('.loading-spinner').style.borderTopColor = color;
-                    
-                    // 更新提示框边框和阴影
-                    const toast = document.querySelector('.toast');
-                    toast.style.borderColor = color;
-                    toast.style.boxShadow = `0 0 10px ${color}`;
-                    
-                    playClickSound();
                 });
             });
-        }
-        
-        // 自动设置按钮动画延迟
-        function setupButtonDelays() {
-            const buttons = document.querySelectorAll('.install-btn, .btn-number');
-            
-            buttons.forEach((button, index) => {
-                // 自动计算动画延迟，新添加的按钮会自动获得正确的延迟
-                button.style.animationDelay = `${0.1 + (index * 0.15)}s`;
+
+            // 为按钮和数字添加延迟动画
+            const btnWrappers = document.querySelectorAll('.btn-wrapper');
+            btnWrappers.forEach((wrapper, index) => {
+                const btn = wrapper.querySelector('.install-btn');
+                const number = wrapper.querySelector('.btn-number');
+                
+                // 依次延迟出现，营造层次感
+                btn.style.animationDelay = `${0.1 + index * 0.15}s`;
+                number.style.animationDelay = `${0.15 + index * 0.15}s`;
             });
-        }
-        
-        // 初始化
-        function init() {
-            createStars();
-            startMeteorShower();
-            setupButtonClicks();
-            setupCloseButtons();
-            setupColorPicker(); // 初始化颜色选择器
-            setupButtonDelays();
-            
-            // 窗口大小改变时重绘星星
-            window.addEventListener('resize', () => {
-                clearTimeout(window.resizeTimer);
-                window.resizeTimer = setTimeout(createStars, 300);
-            });
-        }
-        
-        // 页面加载完成后初始化
-        window.addEventListener('DOMContentLoaded', init);
+        });
     </script>
 </body>
 </html>
-    
